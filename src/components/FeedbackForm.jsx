@@ -21,38 +21,38 @@ function FeedbackForm() {
     }, [feedbackEdit])
 
     const handleTextChange = (e) => {
-        if(text === '') {
-            setBtnDisabled(true)
-            setMessage(null)
-        } else if(text !== '' && text.trim().length <= 10) {
-            setMessage('Text must be at least 10 characters')
-            setBtnDisabled(true)
+        if (text === '') {
+          setBtnDisabled(true)
+          setMessage(null)
+        } else if (text !== '' && text.trim().length <= 10) {
+          setMessage('Text must be at least 10 characters')
+          setBtnDisabled(true)
         } else {
-            setMessage(null)
-            setBtnDisabled(false)
+          setMessage(null)
+          setBtnDisabled(false)
         }
-
+    
         setText(e.target.value)
-    }
-
-    const handleSubmit = (e) => {
-        if(text.trim().length > 10) {
-            const newFeedback = {
-                text,
-                rating
-            }
-            
-            if(feedbackEdit.edit === true) {
-                updateFeedback(feedbackEdit.item.id, newFeedback)
-            } else {
-                addFeedback(newFeedback)
-            }
-
-            setText('')
+      }
+    
+      const handleSubmit = (e) => {
+        e.preventDefault()
+        if (text.trim().length > 10) {
+          const newFeedback = {
+            text,
+            rating,
+          }
+    
+          if (feedbackEdit.edit === true) {
+            updateFeedback(feedbackEdit.item.id, newFeedback)
+            feedbackEdit.edit = false
+          } else {
+            addFeedback(newFeedback)
+          }
+    
+          setText('')
         }
-
-        e.preventDefault();
-    }
+      }
 
     return (
         <Card>
